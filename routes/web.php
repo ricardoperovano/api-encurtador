@@ -13,5 +13,6 @@
 |
 */
 
-$router->get('/{url}', 'UrlController@get');
+$router->get('/', 'UrlController@index');
+$router->get('/{shortened}', 'UrlController@get');
 $router->post('/', 'UrlController@store');
