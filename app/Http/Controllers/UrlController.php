@@ -29,7 +29,10 @@ class UrlController extends Controller
      */
     public function index()
     {
-        $urls = Url::all();
+        /**
+         * retun urls with pagination links
+         */
+        $urls = Url::paginate(10);
 
         return $this->successResponse($urls);
     }
