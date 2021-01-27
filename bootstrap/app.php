@@ -72,6 +72,7 @@ $app->configure('app');
 */
 
 $app->middleware([
+    App\Http\Middleware\CorsMiddleware::class,
     App\Http\Middleware\ExampleMiddleware::class
 ]);
 
@@ -91,8 +92,10 @@ $app->routeMiddleware([
 */
 
 // $app->register(App\Providers\AppServiceProvider::class);
-// $app->register(App\Providers\AuthServiceProvider::class);
+$app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
+
+$app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------

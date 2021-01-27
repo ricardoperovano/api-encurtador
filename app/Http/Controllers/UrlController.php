@@ -20,6 +20,7 @@ class UrlController extends Controller
     //Inject url service to controller
     public function __construct(UrlService $urlService)
     {
+        $this->middleware('auth:api', ['only'    => 'index']);
         $this->urlService = $urlService;
     }
 
@@ -91,13 +92,14 @@ class UrlController extends Controller
 
                 $url->setShortenedUrl($randomUrl);
             } else {
+                $url->setShortenedUrl($request->shortened_url);
                 //cache user custom shortened url
                 $this->urlService->cacheShortenedUrl($url->shortened_url, $request->original_url);
             }
 
             $url->save();
 
-            return $this->successResponse($url, Response::HTTP_CREATED);
+            return $this->successResponse(['url' => $url->shortened_url], Response::HTTP_CREATED);
         } catch (Exception $exception) {
             return $this->errorResponse($exception->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }

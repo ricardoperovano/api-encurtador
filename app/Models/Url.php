@@ -23,7 +23,7 @@ class Url extends Model
 
     public function setShortenedUrl($value)
     {
-        $this->shortened_url = $value;
+        $this->shortened_url = env('APP_URL') . '/' . $value;
 
         return $this;
     }
