@@ -49,7 +49,13 @@ A api foi desenvolvida com a linguagem php utilizando o framework Lumen
 
 ### Acesse o diretorio raiz do projeto para iniciar a configuração e instalação
 
-#### 1 - Crie o arquivo .env e configure o banco de dados
+#### 1 - Instalação das dependencias
+
+```
+composer install
+```
+
+#### 2 - Crie o arquivo .env e configure o banco de dados
 
 ```
 DB_CONNECTION=mysql
@@ -60,16 +66,10 @@ DB_USERNAME=encurtador
 DB_PASSWORD=senha_do_banco
 ```
 
-#### 2 - A aplicação utiliza um sistema de cache, para configurar preencha as informações no arquivo .env . Para fins de testes foi utilizado o driver de cache padrão "file"
+#### 3 - A aplicação utiliza um sistema de cache, para configurar preencha as informações no arquivo .env . Para fins de testes foi utilizado o driver de cache padrão "file"
 
 ```
 CACHE_DRIVER=file
-```
-
-#### 3 - Instalação das dependencias
-
-```
-composer install
 ```
 
 #### 4 - Gere uma chave privada para ser utilizada nos tokens de autenticação
