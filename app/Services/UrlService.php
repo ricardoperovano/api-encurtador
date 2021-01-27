@@ -20,14 +20,15 @@ class UrlService
             $string = $this->getRandomString();
         }
 
-        $this->cacheShortenedUrl($string, $originalUrl);
+        $this->cacheUrl($string, $originalUrl);
 
         return $string;
     }
 
-    public function cacheShortenedUrl($shortened, $url)
+    public function cacheUrl($shortened, $url)
     {
         Cache::put($shortened, $url, 10080);
+        Cache::put($url, $shortened, 10080);
     }
 
     /**

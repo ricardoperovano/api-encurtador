@@ -69,14 +69,32 @@ class UrlController extends Controller
         $regex = '/^[a-zA-Z\d]+$/';
 
         /**
+         * verify if user input shortened url is already created
+         */
+        if ($request->shortened_url && Cache::has($request->shortened_url)) {
+            return $this->errorResponse([
+                'global'   => 'url não está disponível'
+            ]);
+        }
+
+        /**
          * validate request
          * 1 - Original url must be a valid url (max length of 180, but this rule could be removed)
-         * 2 - Optional shortened_url (unique, accepts only letters and numbers max length of 20)
+         * 2 - Optional shortened_url (unique, accepts only letters and numbers max length of 10)
          */
         $this->validate($request, [
             'original_url'  => 'required|url|max:180',
-            'shortened_url'  => 'regex:' . $regex . '|max:20|unique:urls,shortened_url'
+            'shortened_url'  => 'regex:' . $regex . '|max:10|unique:urls,shortened_url'
         ]);
+
+        /**
+         * verify if url is cached
+         */
+        if ($request->original_url && Cache::has($request->original_url)) {
+            return $this->successResponse([
+                'url' => env('APP_URL') . '/' . Cache::get($request->original_url)
+            ], Response::HTTP_OK);
+        }
 
         try {
 
@@ -92,15 +110,14 @@ class UrlController extends Controller
 
                 $url->setShortenedUrl($randomUrl);
             } else {
+                $url->setShortenedUrl($request->shortened_url);
                 //cache user custom shortened url
-                $this->urlService->cacheShortenedUrl($url->shortened_url, $request->original_url);
+                $this->urlService->cacheUrl($request->shortened_url, $request->original_url);
             }
 
             $url->save();
 
-            return $this->successResponse([
-                'url' => env('APP_URL') . '/' . $url->shortened_url
-            ], Response::HTTP_CREATED);
+            return $this->successResponse(['url' => $url->shortened_url], Response::HTTP_CREATED);
         } catch (Exception $exception) {
             return $this->errorResponse($exception->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
