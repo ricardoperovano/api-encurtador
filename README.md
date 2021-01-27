@@ -45,6 +45,11 @@ Implementação
 
 A api foi desenvolvida com a linguagem php utilizando o framework Lumen
 
+## Dependencias
+
+Instale o composer para instalação do projeto
+https://getcomposer.org/doc/00-intro.md
+
 ## Instalação
 
 ### Acesse o diretorio raiz do projeto para iniciar a configuração e instalação
