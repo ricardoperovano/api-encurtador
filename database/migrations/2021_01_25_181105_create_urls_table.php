@@ -17,7 +17,7 @@ class CreateUrlsTable extends Migration
         Schema::create('urls', function (Blueprint $table) {
             $table->id();
             $table->string('original_url', 180);
-            $table->string('shortened_url', 6)->unique();
+            $table->string('shortened_url', 20)->unique();
             $table->dateTime('expiration_date')->nullable()->default(Carbon::now()->addDays(7));
             $table->dateTime('created_at')->default(Carbon::now());
         });
