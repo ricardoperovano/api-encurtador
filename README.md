@@ -55,7 +55,7 @@ A api foi desenvolvida com a linguagem php utilizando o framework Lumen
 composer install
 ```
 
-#### 2 - Crie o arquivo .env e configure o banco de dados
+#### 2 - Crie o arquivo .env e configure o banco de dados (copie o arquivo .env.example para .env)
 
 ```
 DB_CONNECTION=mysql
